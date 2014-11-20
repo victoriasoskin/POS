@@ -1,0 +1,72 @@
+﻿body {
+
+}
+.jumbotron{
+    background-color:lightblue;
+    
+}
+
+.accordion{
+    align-items:center;
+    width:60%;
+}
+.panel-title {
+    text-align: center;
+    font-size: large;
+} 
+.panel-body
+{
+    background-color:floralwhite;
+    align-items:center;
+}
+.question
+{
+    align-self:center;
+}
+input[type="radio"] 
+{
+  margin-top: -1px;
+  vertical-align: middle;
+}
+.controls
+{
+    vertical-align:middle;
+}
+
+#rowPOS
+{
+    background-color:#00Bfff;
+}
+.panel-title
+{
+    font-weight:500;
+}
+#studentDetails
+{
+    border-color:blue;
+    background-color:lightcyan;
+    border-width:1px;
+    border-radius:5px;
+}
+input[type="radio"]{
+    vertical-align:middle;
+    margin-top:0;
+}
+
+#instructions{
+    border-color:red;
+    border-width:2px;
+    border-style:solid;
+    border-radius:5px;
+    align-self:center;
+    background-color:darksalmon;
+}
+#dialog{
+    background-color:red;
+    border-color:red;
+    border-style:solid;
+    border-width:2px;
+}
+.showCustomers{
+    
+}

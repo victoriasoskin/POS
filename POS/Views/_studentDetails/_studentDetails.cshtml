@@ -1,0 +1,13 @@
+﻿@model POS.Models.Student
+<div id="studentDetails">
+    <label class="body-content">ת.ז.: </label>
+    <label>@Html.DisplayFor(Model => Model.StudentID)</label>
+    <label>שם  : </label>
+    <label>@Html.DisplayFor(Model => Model.LastName)</label> &nbsp;
+    <label>@Html.DisplayFor(Model => Model.FirstName)</label>
+    <br />
+    <label>מסגרת לימודים  : </label>
+    <label>@Html.DisplayFor(Model => Model.FrameName)</label> &nbsp;
+    <label>כיתה  : </label>
+    <label>@Html.DisplayFor(Model => Model.ClassName)</label> &nbsp;
+</div>

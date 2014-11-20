@@ -1,0 +1,129 @@
+﻿@model POS.Models.QuestionsList
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+<script src="~/Scripts/jquery-ui.min-1.11.1.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Content/services.js"></script>
+@*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+<link href="~/Content/css/bootstrap-rtl.css" rel="stylesheet" />
+<link href="~/Content/POS.css" rel="stylesheet" />
+<link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div >
+
+    </div>
+    <div class="jumbotron">
+        <div id="studentDetails" >
+           <label>ת.ז. </label>
+           <label> @ViewBag.studentId</label> &nbsp;
+            <label> שם :</label>
+            <label> @ViewBag.studentLastName</label> &nbsp;
+            <label> @ViewBag.studentFirstName</label> &nbsp;
+            <br />
+            <label> מסגרת לימודים  :</label>
+            <label> @ViewBag.studentFrameName</label> &nbsp;
+            <label> כיתה :</label>
+            <label> @ViewBag.studentClassName</label> &nbsp;
+        </div>
+        <div id="instructions">
+            <h3>הוראת למילוי השאלון:</h3>
+           תלמיד יקר,עליך למלא את השאלון הבא בהתאם להרגשתך וכו וכו וכו.
+            אני לא ממש יודעת מה לכתוב פה בהוראת.
+             אז אנא תכינו לי טקסט לשתול פה.
+            בסיום מילוי השאלון מאוד חשוב לשמור אותו ע"י לחיצה על כפור "שמור""
+        </div>
+        <div class="panel-group" id="accordion">
+            @foreach (var item in Model)
+            {
+                @Html.Partial("_questions", item)
+            }
+        </div>
+
+        <div id="dialog" title="תזכורת!">
+            <h1>לא לשכוח לשמור את השאלון!</h1>
+        </div>
+        <div>
+            <input type="button" id ="saveBTN"  class="ui-button" value="שמירה"/>
+            <input type="button" id="cancelBTN" class="ui-button" value="ביטול"/>
+        </div>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            var audioElement = document.createElement('audio');
+            audioElement.setAttribute('src', '~/q11.mp3');
+            audioElement.setAttribute('autoplay', 'autoplay');
+            //audioElement.load()
+            $.get();
+
+            audioElement.addEventListener("load", function () {
+                audioElement.play();
+            }, true);
+
+            $('#playQuestion').click(function () {
+                audioElement.play();
+            });
+        });
+    </script>     
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        var counter = 0;
+        $("#saveBTN").click(function () {
+            var qResults=[];
+
+            $('input:radio:checked').each(function () {
+                var val = $(this).prop('id');
+                var qid = $(this).prop('name');
+                var q = {  SelectedAnswer: val,QuestionId: qid};
+                qResults.push(q);
+                //alert(q.val + " " + q.questionId);
+            });
+            
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(qResults),
+                url: '/POS/saveResults',
+               
+                datatype: 'json',
+                contentType:'application/json',
+                success: function (result) { alert("מילאת בהצלחה את השאלון! כל הכבוד!") },
+                error: function (res) { alert("oioioi....") }
+            });
+        });
+        $('.glyphicon-volume-up').hover(function () { $('.glyphicon-volume-up').css("cursor", "pointer") }).click(function () {
+            var a = $(this).find('audio').attr('id');
+           // alert(a);
+            var p = document.getElementById(a);
+
+            p.play();
+        });
+
+        $('input[type=radio]').click(function () {   
+            counter = counter + 1;
+            //alert(counter);
+            var a = $(this).attr('name');
+           // alert(a);
+            var b = "#FillInd_" + a;
+            //alert(b);
+            $(b).addClass('glyphicon glyphicon-ok');
+            if (counter == 25) {
+                 $("#dialog").dialog();
+            }
+        });
+    });
+</script>
+

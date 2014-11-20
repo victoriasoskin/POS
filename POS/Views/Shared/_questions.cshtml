@@ -1,0 +1,59 @@
+﻿@model POS.Models.POS_Question
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min-1.11.1.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @*<link href="~/Content/css/bootstrap-rtl.css" rel="stylesheet" />*@
+    @*<link href="~/Content/POS.css" rel="stylesheet" />*@
+    @*<script src="~/Content/services.js"></script>*@
+
+
+<div class="panel panel-default">
+    <div class="panel-heading" id="rowPOS">
+        <h4 class="panel-title" >           
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse_@Html.DisplayFor(Model => Model.QuestionId)">
+                    @Html.DisplayFor(Model => Model.Question)
+                    <span id="FillInd_@Html.DisplayFor(Model => Model.QuestionId)"> </span>
+                </a>
+        </h4>
+    </div>
+    <div id="collapse_@Html.DisplayFor(Model => Model.QuestionId)" class="panel-collapse collapse">
+        <div class="panel-body">
+            <table class="question">
+                <tr>
+                    <td>
+                        <span id="audio" class="glyphicon glyphicon-volume-up" >
+                            <audio id="q_@Html.DisplayFor(Model => Model.QuestionId)" class="playQuestion" src="@Html.DisplayFor(Model => Model.AudioURL)"></audio>
+                        </span> 
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td colspan="4">
+
+                        <div class="control-group" >
+                            <div class="controls">                          
+                                        <input type="radio" name="@Html.DisplayFor(Model => Model.QuestionId)" id="1" value="1" />
+                                        בכלל לא
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="@Html.DisplayFor(Model => Model.QuestionId)" id="2" value="2"/>
+                                        במידה מועטה 
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="@Html.DisplayFor(Model => Model.QuestionId)" id="3" value="3" />
+                                        במידה בינונית
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="@Html.DisplayFor(Model => Model.QuestionId)" id="4" value="4" />
+                                        במידה רבה
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="@Html.DisplayFor(Model => Model.QuestionId)" id="5" value="5" />
+                                        במידה רבה מאוד
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
