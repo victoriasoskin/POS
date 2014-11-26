@@ -16,7 +16,8 @@ namespace POS.Models
             List<POS_Question> pq= new List<POS_Question>();
             int i = 0;
             Singleton s = new Singleton();
-            string sql = "select Id,QuestionId,Question,AudioURL from POS.dbo.POS_Questions order by QuestionId";
+            string sql = "SELECT [Id],[QuestionId],[txt],[audioURL] FROM [Book10_21].[dbo].[p5t_FormsQuestions] where eventtypeid=176 order by questionid";
+//          string sql = "select Id,QuestionId,Question,AudioURL from POS.dbo.POS_Questions order by QuestionId";
             dt = s.SelectDTQuery(sql);
             foreach(DataRow  row in dt.Rows)
             {
@@ -39,7 +40,8 @@ namespace POS.Models
             List<POS_AnswerOptions> pq = new List<POS_AnswerOptions>();
             int i = 0;
             Singleton s = new Singleton();
-            string sql = "select Id,Answer from POS.dbo.POS_AnswerOptions order by Id";
+            string sql = "SELECT [Id],[val],[Txt] FROM [Book10_21].[dbo].[p5t_FormsAnswerGruops] where eventtypeid=176 order by id";
+//            string sql = "select Id,Answer from POS.dbo.POS_AnswerOptions order by Id";
             dt = s.SelectDTQuery(sql);
             foreach (DataRow row in dt.Rows)
             {
@@ -63,7 +65,8 @@ namespace POS.Models
         {
             DataTable dt = new DataTable();
             Singleton s = new Singleton();
-            string sql = string.Format("SELECT  [CustomerId],[CustLastName],[CustFirstName],[CustFrameName],[CustClassName],[CustFrameId] FROM [POS].[dbo].[CustomersList] where customerid = {0}", studentId);
+            string sql = string.Format("SELECT distinct cl.[CustomerId],cl.[CustLastName],cl.[CustFirstName],fl.framename ,cel.[CustFrameID] FROM [Book10_21].[dbo].[CustomerList] cl LEFT OUTER JOIN book10_21.dbo.custeventlist cel on cl.customerid=cel.customerid LEFT OUTER JOIN Book10_21.dbo.framelist fl on fl.frameid=cel.custframeid where cl.customerid = {0}", studentId);
+//            string sql = string.Format("SELECT  [CustomerId],[CustLastName],[CustFirstName],[CustFrameName],[CustClassName],[CustFrameId] FROM [POS].[dbo].[CustomersList] where customerid = {0}", studentId);
             dt = s.SelectDTQuery(sql);
             Student st = new Student();
             st.StudentID = dt.Rows[0][0].ToString();
@@ -86,13 +89,17 @@ namespace POS.Models
             eventId = (int)s.selectDBScalar(getIdSql);
             return eventId;
         }
-
+        /// <summary>
+        /// returns list of students that will be in the selecting name drop down - first place to go...
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         internal CustomersList GetCustomersList(int userId)
         {
             CustomersList cll = new CustomersList();
             Singleton s = new Singleton();
             List<Customer> cl = new List<Customer>();
-            string sql = string.Format("select [CustomerId],[CustLastName],[CustFirstName],[CustFrameName],[CustClassName],[CustFrameId] from CustomersList where CustFrameId=(select userFrameId from Users where userId={0})", userId);
+            string sql = string.Format("select distinct cl.[CustomerId],cl.[CustLastName],cl.[CustFirstName],cel.CustFrameID from Book10_21.dbo.CustomerList cl LEFT OUTER JOIN Book10_21.dbo.CustEventList cel on cl.customerid=cel.customerid where CustFrameId=1", userId);
             DataTable dt = new DataTable();
             dt = s.SelectDTQuery(sql);
             foreach (DataRow row in dt.Rows)

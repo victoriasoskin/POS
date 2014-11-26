@@ -31,7 +31,8 @@ namespace POS.Models
         }
         public SqlConnection GetDBConnection()
         {
-            SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["POS"].ConnectionString);
+            //SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["POS"].ConnectionString);
+            SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Book10PE"].ConnectionString);
             return conn;
         }
 
